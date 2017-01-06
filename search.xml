@@ -4,6 +4,13 @@
   
     
     <entry>
+      <title><![CDATA[2017计划白皮书]]></title>
+      <url>http://www.xinyoushanhai.com/2017/01/06/2017%E8%AE%A1%E5%88%92%E7%99%BD%E7%9A%AE%E4%B9%A6/</url>
+      <content type="text"><![CDATA[一、计划看的书籍《java编程思想》三个月内看完 《数据结构与算法分析：Java语言描述》三个月看完+LeetCode刷题 《深入理解计算机系统》 《大话设计模式》 《深入理解Java虚拟机》 《重构》 《Java并发编程》 二、文档Dubbo 文档 spring文档 shiro文档 mybatis文档 三、源码学习Dubbo源码 spring部分源码 shiro源码 mybatis源码 四、要深入学习的java多线程、IO/NIO、容器、注解、序列化、泛型 五、要学会熟练使用的并了解其基本原理kafka es activeMQ redis nginx 六、需要了解的java8相关特性 七、做开源的项目多做几个轮子 八、今年三月份做完自己的项目并上线加紧业务逻辑的代码编写，保证基本服务正常运行，上线 之后进行业务拆分，做一个详细的业务系统规划]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[Down By the Salley Garden]]></title>
       <url>http://www.xinyoushanhai.com/2016/10/20/Down-By-the-Salley-Garden/</url>
       <content type="text"><![CDATA[Down by the Salley Gardens，My love and I did meet.She passed the salley gardens with little snow-white feet.She bid me take love easy, as the leaves grow on the tree;But I, being young and foolish, with her would not agree.In a field by the river my love and I did stand,And on my leaning shoulder she laid her snow-white hand.She bid me take life easy, as the grass grows on the weirs;But I was young and foolish, and now am full of tears.]]></content>
