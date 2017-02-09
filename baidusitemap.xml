@@ -4,8 +4,28 @@
 
     
   <url>
+    <loc>http://www.xinyoushanhai.com/2017/02/09/The-IoC-container/</loc>
+    <lastmod>2017-02-09T08:19:26.845Z</lastmod>
+    <data>
+        <display>
+        <title>The IoC container</title>
+        <pubTime>2017-02-09T01:44:32.000Z</pubTime>
+        
+        <tag>spring 4.3.6</tag>
+         
+         
+           
+             
+              <breadCrumb title="spring" url="http://www.xinyoushanhai.com/categories/spring/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.xinyoushanhai.com/2017/02/08/Overview-of-Spring-Framework/</loc>
-    <lastmod>2017-02-08T12:57:12.312Z</lastmod>
+    <lastmod>2017-02-09T08:11:29.867Z</lastmod>
     <data>
         <display>
         <title>Overview of Spring Framework</title>
