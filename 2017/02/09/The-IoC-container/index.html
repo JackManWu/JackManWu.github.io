@@ -113,7 +113,7 @@
 <meta property="og:site_name" content="心有山海，静而无边">
 <meta property="og:description" content="spring技术栈">
 <meta property="og:image" content="http://jackmanwu.github.io/images/container-magic.png.pagespeed.ce.-0JjaOG5As.png">
-<meta property="og:updated_time" content="2017-02-09T08:19:26.845Z">
+<meta property="og:updated_time" content="2017-02-10T06:34:53.007Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="The IoC container">
 <meta name="twitter:description" content="spring技术栈">
@@ -426,7 +426,19 @@
 <p>在大多数的应用场景中，Spring IoC 容器中实例化一个或多个实例，明确用户代码是非必须的。例如，在web应用场景中，一个有简单的八行（左右）样板web XML描述代码的 <code>web.xml</code> 文件的应用通常就足够了。</p>
 <p>下图是一个Spring如何工作的高级视图。在 <code>ApplicaitonContext</code> 被创建和实例化后，你的应用类会和配置元数据捆绑，这样你就会有一个完全配置过的和可执行的系统或应用。</p>
 <p><img src="http://jackmanwu.github.io/images/container-magic.png.pagespeed.ce.-0JjaOG5As.png" alt=""></p>
-<h3 id="7-2-1-Configuration-metadata"><a href="#7-2-1-Configuration-metadata" class="headerlink" title="7.2.1 Configuration metadata"></a>7.2.1 Configuration metadata</h3>
+<h3 id="7-2-1-Configuration-metadata"><a href="#7-2-1-Configuration-metadata" class="headerlink" title="7.2.1 Configuration metadata"></a>7.2.1 Configuration metadata</h3><p>如前图所示，Spring IoC容器消费配置元数据，应用开发人员在开发应用时，使用配置元数据告诉Spring容器如何初始化、配置和组装对象。</p>
+<p>配置元数据通常使用一种简单直观的XML格式，这种格式大多数章节要使用到，来展示Spring IoC容器的关键概念和功能。</p>
+<p>想要在Spring容器中使用其它形式的元数据信息，请看：</p>
+<ul>
+<li>基于注解的配置</li>
+<li>基于Java代码的配置：从Spring 3.0开始，Spring JavaConfig项目提供了许多特性，并成为了Spring框架核心的一部分。因此你不仅仅使用XML文件定义bean，还可以使用JavaConfig定义。为了使用这些新特性，请查看 <code>@Configuration</code> ，<code>@Bean</code> ,<code>@Bean</code> ,<code>@Import</code> ,和 <code>@DependsOn</code> 注解。</li>
+</ul>
+<p>Spring配置包含至少一个或者多个典型的bean定义，以便容器管理。基于XML的配置元数据使用一个包含在顶级元素 <code>&lt;beans/&gt;</code> 里面的 <code>&lt;bean/&gt;</code> 元素显示的。Java配置通常 <code>@Bean</code> 注解方法与 <code>@Configuration</code> 注解一起使用。</p>
+<p>这些bean定义对应于组成你应用的实际对象。通常你会定义service层对象，数据访问对象（DAOs），表示层对象如Struts <code>Action</code> 实例，基础架构对象如Hibernate <code>SessionFactories</code> ，JMS <code>Queues</code> 等等。通常在容器中不配置细粒度的域对象，因为这通常是DAOs的任务，由业务逻辑创建和加载域对象。但是，你可以使用Spring与AspectJ的集成来配置那些在IoC容器之外被创建的对象。</p>
+<p>下面的例子展示了基于XML配置的配置元数据的基本结构：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line">    <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></div><div class="line">    <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></div><div class="line">        http://www.springframework.org/schema/beans/spring-beans.xsd"&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"..."</span> <span class="attr">class</span>=<span class="string">"..."</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!-- collaborators and configuration for this bean go here --&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"..."</span> <span class="attr">class</span>=<span class="string">"..."</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!-- collaborators and configuration for this bean go here --&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- more bean definitions go here --&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>id属性是一个字符串，用于识别单个bean定义。class属性定义bean的类型，使用完全限定类名。id属性的值指的是协作对象。</p>
+<h3 id="7-2-2-Instantiating-a-container"><a href="#7-2-2-Instantiating-a-container" class="headerlink" title="7.2.2 Instantiating a container"></a>7.2.2 Instantiating a container</h3>
       
     </div>
 
@@ -610,7 +622,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-Introduction-to-the-Spring-IoC-container-and-beans"><span class="nav-number">1.</span> <span class="nav-text">7.1 Introduction to the Spring IoC container and beans</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-Container-overview"><span class="nav-number">2.</span> <span class="nav-text">7.2 Container overview</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-1-Configuration-metadata"><span class="nav-number">2.1.</span> <span class="nav-text">7.2.1 Configuration metadata</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-Introduction-to-the-Spring-IoC-container-and-beans"><span class="nav-number">1.</span> <span class="nav-text">7.1 Introduction to the Spring IoC container and beans</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-Container-overview"><span class="nav-number">2.</span> <span class="nav-text">7.2 Container overview</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-1-Configuration-metadata"><span class="nav-number">2.1.</span> <span class="nav-text">7.2.1 Configuration metadata</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-2-Instantiating-a-container"><span class="nav-number">2.2.</span> <span class="nav-text">7.2.2 Instantiating a container</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
