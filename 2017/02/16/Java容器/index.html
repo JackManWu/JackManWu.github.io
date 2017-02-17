@@ -90,7 +90,7 @@
 <link href="/css/main.css?v=5.0.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="spring 4.3.6," />
+  <meta name="keywords" content="容器," />
 
 
 
@@ -106,18 +106,16 @@
 
 
 
-<meta name="description" content="spring技术栈">
+<meta name="description" content="Java容器基础">
 <meta property="og:type" content="article">
-<meta property="og:title" content="The IoC container 7.1~7.2">
-<meta property="og:url" content="http://www.xinyoushanhai.com/2017/02/09/The-IoC-container/index.html">
+<meta property="og:title" content="Java容器基础">
+<meta property="og:url" content="http://www.xinyoushanhai.com/2017/02/16/Java容器/index.html">
 <meta property="og:site_name" content="心有山海，静而无边">
-<meta property="og:description" content="spring技术栈">
-<meta property="og:image" content="http://jackmanwu.github.io/images/container-magic.png.pagespeed.ce.-0JjaOG5As.png">
-<meta property="og:updated_time" content="2017-02-14T06:15:52.900Z">
+<meta property="og:description" content="Java容器基础">
+<meta property="og:updated_time" content="2017-02-17T08:48:28.618Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="The IoC container 7.1~7.2">
-<meta name="twitter:description" content="spring技术栈">
-<meta name="twitter:image" content="http://jackmanwu.github.io/images/container-magic.png.pagespeed.ce.-0JjaOG5As.png">
+<meta name="twitter:title" content="Java容器基础">
+<meta name="twitter:description" content="Java容器基础">
 
 
 
@@ -138,10 +136,10 @@
 
 
 
-  <link rel="canonical" href="http://www.xinyoushanhai.com/2017/02/09/The-IoC-container/"/>
+  <link rel="canonical" href="http://www.xinyoushanhai.com/2017/02/16/Java容器/"/>
 
 
-  <title> The IoC container 7.1~7.2 | 心有山海，静而无边 </title>
+  <title> Java容器基础 | 心有山海，静而无边 </title>
 </head>
 
 <body itemscope itemtype="//schema.org/WebPage" lang="zh-Hans">
@@ -342,7 +340,7 @@
             
             
               
-                The IoC container 7.1~7.2
+                Java容器基础
               
             
           </h1>
@@ -354,8 +352,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-02-09T09:44:32+08:00" content="2017-02-09">
-              2017-02-09
+            <time itemprop="dateCreated" datetime="2017-02-16T11:44:31+08:00" content="2017-02-16">
+              2017-02-16
             </time>
           </span>
 
@@ -368,8 +366,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/spring/" itemprop="url" rel="index">
-                    <span itemprop="name">spring</span>
+                  <a href="/categories/Java基础/" itemprop="url" rel="index">
+                    <span itemprop="name">Java基础</span>
                   </a>
                 </span>
 
@@ -384,8 +382,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2017/02/09/The-IoC-container/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/09/The-IoC-container/" itemprop="commentsCount"></span>
+                <a href="/2017/02/16/Java容器/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/16/Java容器/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -395,7 +393,7 @@
 
           
           
-             <span id="/2017/02/09/The-IoC-container/" class="leancloud_visitors" data-flag-title="The IoC container 7.1~7.2">
+             <span id="/2017/02/16/Java容器/" class="leancloud_visitors" data-flag-title="Java容器基础">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -417,43 +415,59 @@
       
 
       
-        <h2 id="7-1-Introduction-to-the-Spring-IoC-container-and-beans"><a href="#7-1-Introduction-to-the-Spring-IoC-container-and-beans" class="headerlink" title="7.1 Introduction to the Spring IoC container and beans"></a>7.1 Introduction to the Spring IoC container and beans</h2><p>本章涵盖了Spring框架控制反转实现的原则。IoC 也被称为依赖注入（DI）。这是一个定义它们依赖关系的过程，也就是说，它们使用其它的对象，只能通过构造函数，传参到工厂方法，或者给构造器生成的对象实例或者从工厂方法返回的对象实例设置属性。然后容器创建bean时注入这些依赖。这个过程从根本上时反转，因此命名为控制反转（IoC），通过自身控制实例化或者通过构造器定位依赖关系，或者使用一种机制，如服务定位器模式。</p>
-<p><code>org.springframework.beans</code> 和 <code>org.springframework.context</code> 包是Spring框架IoC容器的基础。<code>BeanFactory</code> 接口提供了一种能够控制任何类型对象的先进的配置机制。<code>ApplicationContext</code> 是 <code>BeanFactory</code> 的子接口。它更加容易集成Spring AOP的功能；信息资源处理（用于国际化），事件发布；和应用层特定上下文如用于web应用的 <code>WebApplicationContext</code> 。</p>
-<p>简而言之，<code>BeanFactory</code> 提供了框架的配置和基本功能，而 <code>ApplicationContext</code> 增加了更多的企业级特定功能。<code>ApplicationContext</code> 是 <code>BeanFactory</code> 的一个完整超集，专门用于本章描述Spring 的IoC容器。</p>
-<p>在Spring中，组成应用骨干的对象和由Spring容器管理的对象，被称作bean。bean是一个被实例化，组装继而被Spring IoC容器管理的对象。然而，一个bean仅仅是应用中许多简单对象之一。Bean，以及它们之间的依赖关系，映射在容器中的配置元数据。</p>
-<h2 id="7-2-Container-overview"><a href="#7-2-Container-overview" class="headerlink" title="7.2 Container overview"></a>7.2 Container overview</h2><p><code>org.springframework.context.ApplicationContext</code> 接口代表了Spring IoC容器，负责上述bean的实例化，配置和组装。容器通过读取配置元数据。配置元数据使用XML，Java注解，或Java代码。它明确了你应用中的对象和这些对象之间的依赖关系。</p>
-<p>Spring中几个 <code>ApplicationContext</code> 接口的实现开箱即用。在独立的应用中，通常创建一个 <code>ClassPathXmlApplicationContext</code> 或者 <code>FileSystemXmlApplicationContext</code> 的实例。在定义配置元数据时，尽管XML是一种传统的格式，你依然可以使用Java注解或者代码作为元数据格式，这样可以提供少量的XML配置，声明能够支持这些额外的元数据格式。</p>
-<p>在大多数的应用场景中，Spring IoC 容器中实例化一个或多个实例，明确用户代码是非必须的。例如，在web应用场景中，一个有简单的八行（左右）样板web XML描述代码的 <code>web.xml</code> 文件的应用通常就足够了。</p>
-<p>下图是一个Spring如何工作的高级视图。在 <code>ApplicaitonContext</code> 被创建和实例化后，你的应用类会和配置元数据捆绑，这样你就会有一个完全配置过的和可执行的系统或应用。</p>
-<p><img src="http://jackmanwu.github.io/images/container-magic.png.pagespeed.ce.-0JjaOG5As.png" alt=""></p>
-<h3 id="7-2-1-Configuration-metadata"><a href="#7-2-1-Configuration-metadata" class="headerlink" title="7.2.1 Configuration metadata"></a>7.2.1 Configuration metadata</h3><p>如前图所示，Spring IoC容器消费配置元数据，应用开发人员在开发应用时，使用配置元数据告诉Spring容器如何初始化、配置和组装对象。</p>
-<p>配置元数据通常使用一种简单直观的XML格式，这种格式大多数章节要使用到，来展示Spring IoC容器的关键概念和功能。</p>
-<p>想要在Spring容器中使用其它形式的元数据信息，请看：</p>
-<ul>
-<li>基于注解的配置</li>
-<li>基于Java代码的配置：从Spring 3.0开始，Spring JavaConfig项目提供了许多特性，并成为了Spring框架核心的一部分。因此你不仅仅使用XML文件定义bean，还可以使用JavaConfig定义。为了使用这些新特性，请查看 <code>@Configuration</code> ，<code>@Bean</code> ,<code>@Bean</code> ,<code>@Import</code> ,和 <code>@DependsOn</code> 注解。</li>
+        <h2 id="1-基本概念"><a href="#1-基本概念" class="headerlink" title="1. 基本概念"></a>1. 基本概念</h2><h3 id="1-1-Java容器分类："><a href="#1-1-Java容器分类：" class="headerlink" title="1.1 Java容器分类："></a>1.1 Java容器分类：</h3><ul>
+<li>Collection</li>
+<li>Map</li>
 </ul>
-<p>Spring配置包含至少一个或者多个典型的bean定义，以便容器管理。基于XML的配置元数据使用一个包含在顶级元素 <code>&lt;beans/&gt;</code> 里面的 <code>&lt;bean/&gt;</code> 元素显示的。Java配置通常 <code>@Bean</code> 注解方法与 <code>@Configuration</code> 注解一起使用。</p>
-<p>这些bean定义对应于组成你应用的实际对象。通常你会定义service层对象，数据访问对象（DAOs），表示层对象如Struts <code>Action</code> 实例，基础架构对象如Hibernate <code>SessionFactories</code> ，JMS <code>Queues</code> 等等。通常在容器中不配置细粒度的域对象，因为这通常是DAOs的任务，由业务逻辑创建和加载域对象。但是，你可以使用Spring与AspectJ的集成来配置那些在IoC容器之外被创建的对象。</p>
-<p>下面的例子展示了基于XML配置的配置元数据的基本结构：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line">    <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></div><div class="line">    <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></div><div class="line">        http://www.springframework.org/schema/beans/spring-beans.xsd"&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"..."</span> <span class="attr">class</span>=<span class="string">"..."</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!-- collaborators and configuration for this bean go here --&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"..."</span> <span class="attr">class</span>=<span class="string">"..."</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!-- collaborators and configuration for this bean go here --&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- more bean definitions go here --&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>id属性是一个字符串，用于识别单个bean定义。class属性定义bean的类型，使用完全限定类名。id属性的值指的是协作对象。</p>
-<h3 id="7-2-2-Instantiating-a-container"><a href="#7-2-2-Instantiating-a-container" class="headerlink" title="7.2.2 Instantiating a container"></a>7.2.2 Instantiating a container</h3><p>实例化一个Spring IoC容器是很简单的。提供给 <code>ApplicationContext</code> 构造器的位置路径或者其它路径，实际上是资源字符串，使得容器从各种各样的外包资源，如本地文件系统，从Java <code>CLASSPATH</code> 等等，加载配置元数据。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ApplicationContext context =</div><div class="line">    <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="keyword">new</span> String[] &#123;<span class="string">"services.xml"</span>, <span class="string">"daos.xml"</span>&#125;);</div></pre></td></tr></table></figure>
-<p>下面的例子服务层对象（<code>service.xml</code>）配置文件：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line">    <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></div><div class="line">    <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></div><div class="line">        http://www.springframework.org/schema/beans/spring-beans.xsd"&gt;</div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- services --&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"petStore"</span> <span class="attr">class</span>=<span class="string">"org.springframework.samples.jpetstore.services.PetStoreServiceImpl"</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"accountDao"</span> <span class="attr">ref</span>=<span class="string">"accountDao"</span>/&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"itemDao"</span> <span class="attr">ref</span>=<span class="string">"itemDao"</span>/&gt;</span></div><div class="line">        <span class="comment">&lt;!-- additional collaborators and configuration for this bean go here --&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- more bean definitions for services go here --&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>下面的例子展示了数据访问层对象 <code>daos.xml</code> 文件：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</div><div class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></div><div class="line">    <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></div><div class="line">    <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></div><div class="line">        http://www.springframework.org/schema/beans/spring-beans.xsd"&gt;</div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"accountDao"</span></span></div><div class="line">        <span class="attr">class</span>=<span class="string">"org.springframework.samples.jpetstore.dao.jpa.JpaAccountDao"</span>&gt;</div><div class="line">        <span class="comment">&lt;!-- additional collaborators and configuration for this bean go here --&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"itemDao"</span> <span class="attr">class</span>=<span class="string">"org.springframework.samples.jpetstore.dao.jpa.JpaItemDao"</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!-- additional collaborators and configuration for this bean go here --&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="comment">&lt;!-- more bean definitions for data access objects go here --&gt;</span></div><div class="line"></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>在上面的例子中，服务层包括类 <code>PetStoreServiceImpl</code> ，和两个数据访问层对象 <code>JapAccountDao</code> 和 <code>JpaItemDao</code> （基于JPA对象/关系映射的标准）。<code>property name</code> 元素指的是JavaBean属性的名称，<code>ref</code> 元素指的是另一个bean定义的名称。<code>id</code> 和 <code>ref</code> 元素之间的联系表达了合作对象之间的依赖关系。</p>
-<h4 id="Composing-XML-based-configuration-metadata"><a href="#Composing-XML-based-configuration-metadata" class="headerlink" title="Composing XML-based configuration metadata"></a>Composing XML-based configuration metadata</h4><p>这对于XML文件定义多个bean是有用的。在你的体系结构中，通常每个单独的XML配置文件代表了一个逻辑层或者模块。</p>
-<p>你可以使用应用上下文构造器从所有这些SML片段中加载bean的定义。这个构造器使用了多个 <code>Resource</code> 定位资源，就像上一节所示。或者，使用一个或多个 <code>&lt;import/&gt;</code> 元素指引从其它文件加载bean的定义。例如：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">beans</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">import</span> <span class="attr">resource</span>=<span class="string">"services.xml"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">import</span> <span class="attr">resource</span>=<span class="string">"resources/messageSource.xml"</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">import</span> <span class="attr">resource</span>=<span class="string">"/resources/themeSource.xml"</span>/&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"bean1"</span> <span class="attr">class</span>=<span class="string">"..."</span>/&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"bean2"</span> <span class="attr">class</span>=<span class="string">"..."</span>/&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></div></pre></td></tr></table></figure>
-<p>在前面的例子中，从三个文件加载外部bean定义：<code>services.xml</code> , <code>messageSource.xml</code> , 和 <code>themeSource.xml</code> 。所有的位置路径是相对于要导进的定义文件，所以 <code>services.xml</code> 必须与要导进的文件位于同一个目录或者类路径下面，而 <code>messageSource.xml</code> 和 <code>themeSource.xml</code> 必须位于 <code>resources</code> 位置下，低于要导进的文件位置。正如你所看到的，开头的正斜杠是被忽略掉的，但是考虑到这些路径是相对的，最好不要使用开头的这个斜杠。被导入的文件内容，包括顶级的 <code>&lt;beans/&gt;</code> 元素，必须是根据Spring Schema定义得有效的XML bean。</p>
-<p>导入指令是由bean本身的命名空间提供的功能。比普通的bean定义进一步的配置功能，在Spring提供的XML 命名空间选择上，如“context”和“util”命名空间。</p>
-<h3 id="7-2-3-Using-the-container"><a href="#7-2-3-Using-the-container" class="headerlink" title="7.2.3 Using the container"></a>7.2.3 Using the container</h3><p><code>ApplicationContext</code> 是一个能够注册不同bean及其依赖的高级工厂接口。使用方法 <code>T getBean(String name,Class&lt;T&gt; requiredType)</code> 你可以取回bean的实例。</p>
-<p><code>ApplicationContext</code> 使你能够读取bean定义并访问它们，像下面这样：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// create and configure beans</span></div><div class="line">ApplicationContext context = <span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">"services.xml"</span>, <span class="string">"daos.xml"</span>);</div><div class="line"></div><div class="line"><span class="comment">// retrieve configured instance</span></div><div class="line">PetStoreService service = context.getBean(<span class="string">"petStore"</span>, PetStoreService.class);</div><div class="line"></div><div class="line"><span class="comment">// use configured instance</span></div><div class="line">List&lt;String&gt; userList = service.getUsernameList();</div></pre></td></tr></table></figure>
-<p>然后你可以使用 <code>getBean</code> 获取bean的实例。<code>ApplicationContext</code> 接口有一些其它的方法获取bean，但是理想情况下你的应用代码不应该使用它们。事实上，你的应用代码根本就不该调用 <code>getBean()</code> 方法，从而不依赖Spring的APIs。例如，整合web框架的Spring为各种各样的框架组件如controller和JSF管理bean提供了依赖注入，允许你通过元数据在特定的bean上声明依赖（如自动装配注解）。</p>
+<p>Collection:</p>
+<ul>
+<li>List：必须按照插入的顺序保存元素</li>
+<li>Set：不能有重复的元素</li>
+<li>Queue：按照排队规则确定对象产生的顺序（通常与他们被插入的顺序相同）</li>
+</ul>
+<p>Map:也被称为“关联数组”，或者“字典”。</p>
+<h3 id="1-2-添加元素"><a href="#1-2-添加元素" class="headerlink" title="1.2 添加元素"></a>1.2 添加元素</h3><p>Arrays.asList(): 接受一个数组或者一个用逗号分隔的元素列表（使用可变参数），并将其转化为一个List对象。</p>
+<p>Collections.addAll()：接受一个Collection对象，以及一个数组或者是用一个逗号分隔的列表，将元素添加到Collection中。</p>
+<h3 id="1-3-List"><a href="#1-3-List" class="headerlink" title="1.3 List"></a>1.3 List</h3><ul>
+<li>ArrayList: 优点—随机访问元素；缺点—但是在List中间插入和移除元素时比较慢。</li>
+<li>LinkedList: 优点—在List中间进行插入和删除操作代价低，提供了优化的顺序访问；缺点—随机访问相对比较慢，但是特性集较ArrayList更大。</li>
+</ul>
+<p><code>contains()</code> ：确认某个对象是否在列表中，依赖equals()方法。</p>
+<p><code>remove()</code> ：移除一个对象，则可以将这个对象的引用传递给remove()方法，依赖equals()方法。也可以直接传递索引值移除对象，不依赖equals()方法。</p>
+<p><code>indexOf()</code> ：查询对象在List中所处位置的索引编号，将该对象传递给indexOf()方法，依赖equals()方法。</p>
+<p><code>subList()</code> ：允许你从较大的列表中创建出一个片段，而将其结果传递给这个较大列表的containsAll()方法时，很自然得到true。</p>
+<p><code>retainAll()</code> ：求交集，依赖equals()方法。</p>
+<p><code>removeAll()</code> ：从List中移除在参数List中的所有元素，依赖equals()方法。</p>
+<p><code>set()</code> ：在指定的索引处（第一个参数），用指定的参数替换整个位置的元素。</p>
+<p><code>isEmpty()</code> ：是否为空。</p>
+<p><code>clear()</code> ：清空列表。</p>
+<p><code>Collection.toArray(new T[0])</code> ：List转为数组，如果参数数组太小，toArray()方法将创建一个具有合适尺寸的数组。</p>
+<h3 id="1-4-迭代器"><a href="#1-4-迭代器" class="headerlink" title="1.4 迭代器"></a>1.4 迭代器</h3><h4 id="1-4-1-Iterator"><a href="#1-4-1-Iterator" class="headerlink" title="1.4.1 Iterator"></a>1.4.1 Iterator</h4><p>Java的Iterator只能单向移动，这个Iterator只能用来：</p>
+<ul>
+<li>使用方法iterator()要求容器返回一个Iterator。Iterator将准备好返回序列的第一个元素。</li>
+<li>使用next()获得序列中的下一个元素。</li>
+<li>使用hasNext()检查序列中是否还有元素。</li>
+<li>使用remove()将迭代器新近返回的元素删除。</li>
+</ul>
+<h4 id="1-4-2-ListIterator"><a href="#1-4-2-ListIterator" class="headerlink" title="1.4.2 ListIterator"></a>1.4.2 ListIterator</h4><p>ListIterator是Iterator的子类，只能用于各种List类的访问，可以双向移动。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OtherTest</span> </span>&#123;</div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</div><div class="line">        List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;(Arrays.asList(<span class="string">"hello"</span>, <span class="string">"world"</span>, <span class="string">"happy"</span>));</div><div class="line">        <span class="comment">//指向List开始处的位置</span></div><div class="line">        ListIterator&lt;String&gt; iterator = list.listIterator();</div><div class="line">        <span class="keyword">while</span> (iterator.hasNext()) &#123;</div><div class="line">            System.out.println(iterator.next() + <span class="string">", "</span> + iterator.nextIndex() + <span class="string">", "</span> + iterator.previousIndex());</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">while</span> (iterator.hasPrevious())&#123;</div><div class="line">            System.out.println(iterator.previous() + <span class="string">", "</span> + iterator.previousIndex() + <span class="string">", "</span> + iterator.nextIndex());</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">//指向List索引为2的元素处</span></div><div class="line">        iterator = list.listIterator(<span class="number">2</span>);</div><div class="line">        <span class="keyword">while</span> (iterator.hasPrevious())&#123;</div><div class="line">            System.out.println(iterator.previous());</div><div class="line">            iterator.set(<span class="string">"Good"</span>);</div><div class="line">        &#125;</div><div class="line">        System.out.println(list);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="1-5-LinkedList"><a href="#1-5-LinkedList" class="headerlink" title="1.5 LinkedList"></a>1.5 LinkedList</h3><p>LinkedList 在List中间插入和移除时比ArrayList更高效，但在随机访问操作方面却要逊色一些。它还添加了可以使其用作栈，队列或双端队列的方法。</p>
+<ul>
+<li>getFirst()和element()：都返回列表的头（第一个元素），而不移除它，如果List为空，则抛出NoSuchElementException。</li>
+<li>peek()：在列表为空时返回null。</li>
+<li>removeFirst()与remove()：移除并返回列表的头，在列表为空时抛出NoSuchElementException。</li>
+<li>poll()：列表为空时返回null。</li>
+<li>addFirst()和add()以及addLast()：将某个元素插入到列表的尾（端）部。</li>
+<li>removeLast()：移除并返回列表的最后一个元素。</li>
+</ul>
+<p>LinkedList 可以当做栈来使用。</p>
+<h3 id="1-6-Set"><a href="#1-6-Set" class="headerlink" title="1.6 Set"></a>1.6 Set</h3><p>Set不保存重复的元素。HashSet提供最快的查询速度；TreeSet保持元素处于排序状态；LinkedHashSet以插入顺序保存元素。</p>
+<h3 id="1-7-Map"><a href="#1-7-Map" class="headerlink" title="1.7 Map"></a>1.7 Map</h3><p>HashMap设计用来快速访问；TreeMap保持“键”始终处于排序状态，所以没有HashMap快。LinkedHashMap保持元素插入的顺序，但是也通过散列提供了快速访问能力。</p>
+<h3 id="1-8-Queue"><a href="#1-8-Queue" class="headerlink" title="1.8 Queue"></a>1.8 Queue</h3><p>队列是一个典型的先进先出（FIFO）的容器。LinkedList可以用作Queue的一种实现。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OtherTest</span> </span>&#123;</div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</div><div class="line">        Queue&lt;Integer&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();</div><div class="line">        Random random = <span class="keyword">new</span> Random(<span class="number">47</span>);</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</div><div class="line">            queue.offer(random.nextInt(i+<span class="number">10</span>));</div><div class="line">        &#125;</div><div class="line">        System.out.println(queue);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="1-9-PriorityQueue"><a href="#1-9-PriorityQueue" class="headerlink" title="1.9 PriorityQueue"></a>1.9 PriorityQueue</h3><p>优先队列声明下一个弹出元素是最需要的元素（具有最高的优先级）。当你在PriorityQueue上调用offer()方法来插入一个对象时，这个对象会在队列中被排序。默认的排序将使用对象在队列中的自然排序。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OtherTest</span> </span>&#123;</div><div class="line">    <span class="meta">@Test</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</div><div class="line">        String fact = <span class="string">"EDASASAD SDSADD QWACASASV"</span>;</div><div class="line">        List&lt;String&gt; list = Arrays.asList(fact.split(<span class="string">" "</span>));</div><div class="line">        PriorityQueue&lt;String&gt; priorityQueue = <span class="keyword">new</span> PriorityQueue&lt;&gt;(list);</div><div class="line">        System.out.println(priorityQueue);</div><div class="line">        priorityQueue = <span class="keyword">new</span> PriorityQueue&lt;&gt;(list.size(), Collections.reverseOrder());</div><div class="line">        priorityQueue.addAll(list);</div><div class="line">        System.out.println(priorityQueue);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="2-0-适配器方法惯用法"><a href="#2-0-适配器方法惯用法" class="headerlink" title="2.0 适配器方法惯用法"></a>2.0 适配器方法惯用法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OtherTest</span>&lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">ArrayList</span>&lt;<span class="title">T</span>&gt; </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">OtherTest</span><span class="params">(Collection&lt;T&gt; c)</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>(c);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Iterable&lt;T&gt; <span class="title">reversed</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Iterable&lt;T&gt;() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> Iterator&lt;T&gt; <span class="title">iterator</span><span class="params">()</span> </span>&#123;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">new</span> Iterator&lt;T&gt;() &#123;</div><div class="line">                    <span class="keyword">int</span> current = size() - <span class="number">1</span>;</div><div class="line"></div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasNext</span><span class="params">()</span> </span>&#123;</div><div class="line">                        <span class="keyword">return</span> current &gt; -<span class="number">1</span>;</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> T <span class="title">next</span><span class="params">()</span> </span>&#123;</div><div class="line">                        <span class="keyword">return</span> get(current--);</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">()</span> </span>&#123;</div><div class="line">                        <span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedOperationException();</div><div class="line">                    &#125;</div><div class="line">                &#125;;</div><div class="line">            &#125;</div><div class="line">        &#125;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        OtherTest&lt;String&gt; otherTest = <span class="keyword">new</span> OtherTest&lt;&gt;(Arrays.asList(<span class="string">"To be or not to be"</span>.split(<span class="string">" "</span>)));</div><div class="line">        <span class="keyword">for</span> (String s : otherTest) &#123;</div><div class="line">            System.out.print(s + <span class="string">" "</span>);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (String s : otherTest.reversed()) &#123;</div><div class="line">            System.out.print(s + <span class="string">" "</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -476,7 +490,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/spring-4-3-6/" rel="tag">#spring 4.3.6</a>
+            <a href="/tags/容器/" rel="tag">#容器</a>
           
         </div>
       
@@ -485,17 +499,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/08/Overview-of-Spring-Framework/" rel="next" title="Overview of Spring Framework">
-                <i class="fa fa-chevron-left"></i> Overview of Spring Framework
+              <a href="/2017/02/14/The-IoC-container-1/" rel="next" title="The IoC container 7.3~7.4">
+                <i class="fa fa-chevron-left"></i> The IoC container 7.3~7.4
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/14/The-IoC-container-1/" rel="prev" title="The IoC container 7.3~7.4">
-                The IoC container 7.3~7.4 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -530,8 +540,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/09/The-IoC-container/"
-           data-title="The IoC container 7.1~7.2" data-url="http://www.xinyoushanhai.com/2017/02/09/The-IoC-container/">
+      <div class="ds-thread" data-thread-key="2017/02/16/Java容器/"
+           data-title="Java容器基础" data-url="http://www.xinyoushanhai.com/2017/02/16/Java容器/">
       </div>
     
   </div>
@@ -642,7 +652,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1-Introduction-to-the-Spring-IoC-container-and-beans"><span class="nav-number">1.</span> <span class="nav-text">7.1 Introduction to the Spring IoC container and beans</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-2-Container-overview"><span class="nav-number">2.</span> <span class="nav-text">7.2 Container overview</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-1-Configuration-metadata"><span class="nav-number">2.1.</span> <span class="nav-text">7.2.1 Configuration metadata</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-2-Instantiating-a-container"><span class="nav-number">2.2.</span> <span class="nav-text">7.2.2 Instantiating a container</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Composing-XML-based-configuration-metadata"><span class="nav-number">2.2.1.</span> <span class="nav-text">Composing XML-based configuration metadata</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-3-Using-the-container"><span class="nav-number">2.3.</span> <span class="nav-text">7.2.3 Using the container</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-基本概念"><span class="nav-number">1.</span> <span class="nav-text">1. 基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Java容器分类："><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Java容器分类：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-添加元素"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 添加元素</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-List"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 List</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-迭代器"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 迭代器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-1-Iterator"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.4.1 Iterator</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-2-ListIterator"><span class="nav-number">1.4.2.</span> <span class="nav-text">1.4.2 ListIterator</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-LinkedList"><span class="nav-number">1.5.</span> <span class="nav-text">1.5 LinkedList</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-Set"><span class="nav-number">1.6.</span> <span class="nav-text">1.6 Set</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-Map"><span class="nav-number">1.7.</span> <span class="nav-text">1.7 Map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-8-Queue"><span class="nav-number">1.8.</span> <span class="nav-text">1.8 Queue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-9-PriorityQueue"><span class="nav-number">1.9.</span> <span class="nav-text">1.9 PriorityQueue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-0-适配器方法惯用法"><span class="nav-number">1.10.</span> <span class="nav-text">2.0 适配器方法惯用法</span></a></li></ol></li></ol></div>
             
           </div>
         </section>
